@@ -307,12 +307,14 @@ match client.collections().add("my_collection").await {
 Check out the [examples](examples/) directory for more complete examples:
 
 - [basic.rs](examples/basic.rs) - Complete workflow from collection creation to search
+- [arxiv_search.rs](examples/arxiv_search.rs) - Download and search arXiv papers with PDF support
 
 Run an example:
 
 ```bash
 export ZEROENTROPY_API_KEY="your-api-key"
 cargo run --example basic
+cargo run --example arxiv_search
 ```
 
 ## API Documentation
