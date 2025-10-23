@@ -8,12 +8,12 @@ Rust client library for the [ZeroEntropy API](https://zeroentropy.dev) - a power
 
 ## Features
 
-- ✅ **Full API Coverage** - Complete implementation of all ZeroEntropy API endpoints
-- ✅ **Type-Safe** - Strongly typed with comprehensive error handling
-- ✅ **Async/Await** - Built on Tokio for high-performance async operations
-- ✅ **Automatic Retries** - Configurable retry logic with exponential backoff
-- ✅ **Easy to Use** - Ergonomic API design with builder patterns
-- ✅ **Well Documented** - Extensive documentation and examples
+- **Full API Coverage** - Complete implementation of all ZeroEntropy API endpoints
+- **Type-Safe** - Strongly typed with comprehensive error handling
+- **Async/Await** - Built on Tokio for high-performance async operations
+- **Automatic Retries** - Configurable retry logic with exponential backoff
+- **Easy to Use** - Ergonomic API design with builder patterns
+- **Well Documented** - Extensive documentation and examples
 
 ## Installation
 
