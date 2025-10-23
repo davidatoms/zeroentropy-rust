@@ -1,3 +1,13 @@
 /target
 .env
 .env.local
+
+# Cache directories
+arxiv_cache/
+fed_register_cache/
+patents_cache/
+*_cache/
+
+# Temporary files
+*.pdf
+*.tmp
