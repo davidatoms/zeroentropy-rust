@@ -1,0 +1,23 @@
+[package]
+name = "zeroentropy"
+version = "0.1.0"
+edition = "2021"
+authors = ["ZeroEntropy Community"]
+license = "Apache-2.0"
+description = "Rust client library for the ZeroEntropy API"
+repository = "https://github.com/zeroentropy-ai/zeroentropy-rust"
+readme = "README.md"
+keywords = ["api", "client", "search", "retrieval", "semantic-search"]
+categories = ["api-bindings", "web-programming::http-client"]
+
+[dependencies]
+reqwest = { version = "0.11", features = ["json", "multipart"] }
+tokio = { version = "1.0", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+base64 = "0.21"
+
+[dev-dependencies]
+tokio-test = "0.4"
+dotenv = "0.15"
