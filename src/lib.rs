@@ -5,7 +5,7 @@
 //! ## Quick Start
 //!
 //! ```no_run
-//! use zeroentropy::Client;
+//! use zeroentropy_community::Client;
 //!
 //! #[tokio::main]
 //! async fn main() -> Result<(), Box<dyn std::error::Error>> {

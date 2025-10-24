@@ -1,4 +1,4 @@
-use zeroentropy::Client;
+use zeroentropy_community::Client;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -10,7 +10,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("Creating collection...");
     match client.collections().add("rust_example").await {
         Ok(response) => println!("{}", response.message),
-        Err(zeroentropy::Error::Conflict(_)) => println!("Collection already exists"),
+        Err(zeroentropy_community::Error::Conflict(_)) => println!("Collection already exists"),
         Err(e) => return Err(e.into()),
     }
 
@@ -34,7 +34,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut metadata = HashMap::new();
     metadata.insert(
         "category".to_string(),
-        zeroentropy::MetadataValue::String("tutorial".to_string()),
+        zeroentropy_community::MetadataValue::String("tutorial".to_string()),
     );
     
     client.documents().add_text(

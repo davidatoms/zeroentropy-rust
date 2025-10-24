@@ -20,7 +20,7 @@ impl<'a> Collections<'a> {
     ///
     /// # Example
     /// ```no_run
-    /// # use zeroentropy::Client;
+    /// # use zeroentropy_community::Client;
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
     /// let client = Client::from_env()?;
     /// client.collections().add("my_collection").await?;
@@ -47,7 +47,7 @@ impl<'a> Collections<'a> {
     ///
     /// # Example
     /// ```no_run
-    /// # use zeroentropy::Client;
+    /// # use zeroentropy_community::Client;
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
     /// let client = Client::from_env()?;
     /// client.collections().delete("my_collection").await?;
@@ -71,7 +71,7 @@ impl<'a> Collections<'a> {
     ///
     /// # Example
     /// ```no_run
-    /// # use zeroentropy::Client;
+    /// # use zeroentropy_community::Client;
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
     /// let client = Client::from_env()?;
     /// let response = client.collections().get_list().await?;

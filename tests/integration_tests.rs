@@ -1,4 +1,4 @@
-use zeroentropy::{Client, DocumentContent, MetadataValue};
+use zeroentropy_community::{Client, DocumentContent, MetadataValue};
 use std::collections::HashMap;
 
 #[test]
@@ -78,7 +78,7 @@ fn test_metadata_serialization() {
 
 #[test]
 fn test_error_display() {
-    use zeroentropy::Error;
+    use zeroentropy_community::Error;
     
     let err = Error::NotFound("Collection not found".to_string());
     assert_eq!(err.to_string(), "Not found: Collection not found");
@@ -89,7 +89,7 @@ fn test_error_display() {
 
 #[test]
 fn test_latency_mode_serialization() {
-    use zeroentropy::LatencyMode;
+    use zeroentropy_community::LatencyMode;
     
     let low = LatencyMode::Low;
     assert_eq!(serde_json::to_string(&low).unwrap(), "\"low\"");
@@ -100,7 +100,7 @@ fn test_latency_mode_serialization() {
 
 #[test]
 fn test_index_status_serialization() {
-    use zeroentropy::IndexStatus;
+    use zeroentropy_community::IndexStatus;
     
     let status = IndexStatus::Indexed;
     assert_eq!(serde_json::to_string(&status).unwrap(), "\"indexed\"");

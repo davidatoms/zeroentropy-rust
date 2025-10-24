@@ -1,7 +1,7 @@
 # ZeroEntropy Rust SDK
 
-[![Crates.io](https://img.shields.io/crates/v/zeroentropy.svg)](https://crates.io/crates/zeroentropy)
-[![Documentation](https://docs.rs/zeroentropy/badge.svg)](https://docs.rs/zeroentropy)
+[![Crates.io](https://img.shields.io/crates/v/zeroentropy-community.svg)](https://crates.io/crates/zeroentropy-community)
+[![Documentation](https://docs.rs/zeroentropy-community/badge.svg)](https://docs.rs/zeroentropy-community)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 Rust client library for the [ZeroEntropy API](https://zeroentropy.dev) - a powerful semantic search and document retrieval service.
@@ -16,7 +16,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-zeroentropy = "0.1.0"
+zeroentropy-community = "0.1.0"
 tokio = { version = "1.0", features = ["full"] }
 ```
 
@@ -321,7 +321,7 @@ cargo run --example arxiv_search
 
 For detailed API documentation, visit:
 - [ZeroEntropy API Docs](https://docs.zeroentropy.dev/api-reference/)
-- [Rust SDK Docs](https://docs.rs/zeroentropy)
+- [Rust SDK Docs](https://docs.rs/zeroentropy-community)
 
 ## Development
 

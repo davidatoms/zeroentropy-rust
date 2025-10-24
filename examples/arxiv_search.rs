@@ -1,4 +1,4 @@
-use zeroentropy::{Client, MetadataValue};
+use zeroentropy_community::{Client, MetadataValue};
 use std::collections::HashMap;
 use std::time::Duration;
 use tokio::time::sleep;
@@ -17,7 +17,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("\n=== Creating Collection ===");
     match client.collections().add(collection).await {
         Ok(_) => println!("Collection '{}' created", collection),
-        Err(zeroentropy::Error::Conflict(_)) => {
+        Err(zeroentropy_community::Error::Conflict(_)) => {
             println!("Collection '{}' already exists", collection)
         }
         Err(e) => return Err(e.into()),
@@ -80,7 +80,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("Waiting for document processing...");
             sleep(Duration::from_secs(3)).await;
         }
-        Err(zeroentropy::Error::Conflict(_)) => {
+        Err(zeroentropy_community::Error::Conflict(_)) => {
             println!("Paper already indexed, using existing version");
         }
         Err(e) => return Err(e.into()),

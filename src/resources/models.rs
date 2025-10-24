@@ -23,7 +23,7 @@ impl<'a> Models<'a> {
     ///
     /// # Example
     /// ```no_run
-    /// # use zeroentropy::{Client, RerankDocument};
+    /// # use zeroentropy_community::{Client, RerankDocument};
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
     /// let client = Client::from_env()?;
     /// let documents = vec![

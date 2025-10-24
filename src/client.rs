@@ -25,7 +25,7 @@ impl Client {
     ///
     /// # Example
     /// ```no_run
-    /// use zeroentropy::Client;
+    /// use zeroentropy_community::Client;
     ///
     /// let client = Client::new("your-api-key").unwrap();
     /// ```

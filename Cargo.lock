@@ -1514,7 +1514,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "zeroentropy"
+name = "zeroentropy-community"
 version = "0.1.0"
 dependencies = [
  "base64",
