@@ -10,12 +10,12 @@ use tokio::time::sleep;
 /// containing ~5000 de-identified medical transcriptions across various specialties.
 ///
 /// Usage:
-///   1. Download the dataset:
-///      wget -O /tmp/medical_transcriptions.zip "https://www.kaggle.com/api/v1/datasets/download/tboyle10/medicaltranscriptions"
-///      unzip /tmp/medical_transcriptions.zip -d /tmp
-///   
+///   1. Download the dataset from Kaggle and extract mtsamples.csv to your temp directory
+///      (Windows: %TEMP%, Linux/Mac: /tmp)
+///
 ///   2. Set your API key and run:
-///      export ZEROENTROPY_API_KEY="your-api-key"
+///      Windows: set ZEROENTROPY_API_KEY=your-api-key
+///      Linux/Mac: export ZEROENTROPY_API_KEY="your-api-key"
 ///      cargo run --example ehr_search
 ///
 /// This demonstrates how ZeroEntropy enables semantic search across medical records,
@@ -43,10 +43,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     if doc_list.documents.is_empty() {
         println!("\n=== Indexing Medical Transcriptions ===");
-        println!("Reading CSV from /tmp/mtsamples.csv...");
-        
+        let temp_dir = std::env::temp_dir();
+        let csv_path = temp_dir.join("mtsamples.csv");
+        println!("Reading CSV from {}...", csv_path.display());
+
         // Read and parse CSV
-        let csv_content = std::fs::read_to_string("/tmp/mtsamples.csv")?;
+        let csv_content = std::fs::read_to_string(&csv_path)?;
         let mut rdr = csv::Reader::from_reader(csv_content.as_bytes());
         
         let mut count = 0;
@@ -64,7 +66,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             // CSV columns: description, medical_specialty, sample_name, transcription, keywords
             let description = record.get(0).unwrap_or("");
             let specialty = record.get(1).unwrap_or("");
-            let sample_name = record.get(2).unwrap_or("");
+            let _sample_name = record.get(2).unwrap_or("");
             let transcription = record.get(3).unwrap_or("");
             let keywords = record.get(4).unwrap_or("");
             
@@ -195,17 +197,24 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Demonstrate metadata filtering
     println!("Query: 'patient assessment' filtered to Cardiology specialty");
     
-    let filter = serde_json::json!({
-        "specialty": { "$eq": "Cardiovascular / Pulmonary" }
-    });
-    
+    // Build filter as HashMap
+    let mut filter = HashMap::new();
+    let mut specialty_filter = HashMap::new();
+    specialty_filter.insert(
+        "$eq".to_string(),
+        serde_json::Value::String("Cardiovascular / Pulmonary".to_string()),
+    );
+    filter.insert("specialty".to_string(), serde_json::Value::Object(
+        specialty_filter.into_iter().collect()
+    ));
+
     let results = client
         .queries()
         .top_snippets(
             collection,
             "patient assessment",
             3,
-            Some(filter.as_object().unwrap().clone()),
+            Some(filter),
             Some(true),
             None,
             None,

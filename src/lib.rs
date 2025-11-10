@@ -46,10 +46,15 @@ mod types;
 
 pub use client::{Client, ClientBuilder};
 pub use error::{Error, Result};
-pub use resources::{Collections, Documents, Models, Queries};
+pub use resources::{Collections, Documents, Models, Queries, Status};
 pub use types::*;
 
 impl Client {
+    /// Access the status resource
+    pub fn status(&self) -> Status {
+        Status::new(self)
+    }
+
     /// Access the collections resource
     pub fn collections(&self) -> Collections {
         Collections::new(self)

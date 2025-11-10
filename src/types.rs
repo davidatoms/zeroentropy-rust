@@ -62,7 +62,7 @@ pub struct CollectionResponse {
 /// Response from get collection list
 #[derive(Debug, Deserialize)]
 pub struct CollectionListResponse {
-    pub collections: Vec<String>,
+    pub collection_names: Vec<String>,
 }
 
 /// Response from document add/update/delete
@@ -79,7 +79,7 @@ pub struct DocumentInfo {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub metadata: Option<Metadata>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub content: Option<DocumentContent>,
+    pub content: Option<String>,
 }
 
 /// Response from get document info
@@ -130,7 +130,7 @@ pub struct TopDocumentsResponse {
 #[derive(Debug, Deserialize)]
 pub struct PageResult {
     pub path: String,
-    pub page_number: u32,
+    pub page_index: u32,
     pub score: f64,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub content: Option<String>,

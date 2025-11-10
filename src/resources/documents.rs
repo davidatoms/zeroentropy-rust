@@ -206,14 +206,14 @@ impl<'a> Documents<'a> {
         &self,
         collection_name: impl Into<String>,
         path: impl Into<String>,
-        page_number: u32,
+        page_index: u32,
         include_content: Option<bool>,
     ) -> Result<PageInfoResponse> {
         #[derive(Serialize)]
         struct Request {
             collection_name: String,
             path: String,
-            page_number: u32,
+            page_index: u32,
             #[serde(skip_serializing_if = "Option::is_none")]
             include_content: Option<bool>,
         }
@@ -221,7 +221,7 @@ impl<'a> Documents<'a> {
         let body = Request {
             collection_name: collection_name.into(),
             path: path.into(),
-            page_number,
+            page_index,
             include_content,
         };
 

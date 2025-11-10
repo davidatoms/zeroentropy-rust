@@ -75,7 +75,7 @@ impl<'a> Collections<'a> {
     /// # async fn example() -> Result<(), Box<dyn std::error::Error>> {
     /// let client = Client::from_env()?;
     /// let response = client.collections().get_list().await?;
-    /// for collection in response.collections {
+    /// for collection in response.collection_names {
     ///     println!("Collection: {}", collection);
     /// }
     /// # Ok(())

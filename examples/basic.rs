@@ -3,6 +3,9 @@ use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load .env file if it exists
+    dotenv::dotenv().ok();
+
     // Create client from ZEROENTROPY_API_KEY environment variable
     let client = Client::from_env()?;
 

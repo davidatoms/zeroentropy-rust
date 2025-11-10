@@ -4,12 +4,15 @@ use std::time::Duration;
 use tokio::time::sleep;
 
 /// Simplified example of downloading and searching arXiv papers
-/// 
+///
 /// Usage:
 ///   export ZEROENTROPY_API_KEY="your-api-key"
 ///   cargo run --example arxiv_search
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Load .env file if it exists
+    dotenv::dotenv().ok();
+
     let client = Client::from_env()?;
     let collection = "arxiv_demo";
 
@@ -40,9 +43,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .await?;
     
     // Save PDF temporarily
-    let pdf_path = format!("/tmp/arxiv_{}.pdf", arxiv_id);
+    let temp_dir = std::env::temp_dir();
+    let pdf_path = temp_dir.join(format!("arxiv_{}.pdf", arxiv_id));
     std::fs::write(&pdf_path, pdf_bytes)?;
-    println!("Downloaded to: {}", pdf_path);
+    println!("Downloaded to: {}", pdf_path.display());
 
     // Index the paper with metadata
     println!("\n=== Indexing Paper ===");
