@@ -1,8 +1,10 @@
 # ZeroEntropy Rust SDK
 
+[![CI](https://github.com/davidatoms/zeroentropy-rust/workflows/CI/badge.svg)](https://github.com/davidatoms/zeroentropy-rust/actions)
 [![Crates.io](https://img.shields.io/crates/v/zeroentropy-community.svg)](https://crates.io/crates/zeroentropy-community)
 [![Documentation](https://docs.rs/zeroentropy-community/badge.svg)](https://docs.rs/zeroentropy-community)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+[![Downloads](https://img.shields.io/crates/d/zeroentropy-community.svg)](https://crates.io/crates/zeroentropy-community)
 
 Rust client library for the [ZeroEntropy API](https://zeroentropy.dev) - a powerful semantic search and document retrieval service.
 
@@ -16,14 +18,14 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-zeroentropy-community = "0.1.0"
+zeroentropy-community = "0.1.1"
 tokio = { version = "1.0", features = ["full"] }
 ```
 
 ## Quick Start
 
 ```rust
-use zeroentropy::Client;
+use zeroentropy_community::Client;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -72,7 +74,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 For advanced configuration, use the client builder:
 
 ```rust
-use zeroentropy::Client;
+use zeroentropy_community::Client;
 use std::time::Duration;
 
 let client = Client::builder()
@@ -92,7 +94,7 @@ client.collections().add("my_collection").await?;
 
 // List all collections
 let collections = client.collections().get_list().await?;
-for name in collections.collections {
+for name in collections.collection_names {
     println!("Collection: {}", name);
 }
 
@@ -117,7 +119,7 @@ client.documents().add_text(
 
 ```rust
 use std::collections::HashMap;
-use zeroentropy::MetadataValue;
+use zeroentropy_community::MetadataValue;
 
 let mut metadata = HashMap::new();
 metadata.insert(
@@ -229,7 +231,7 @@ let results = client.queries().top_pages(
 ).await?;
 
 for page in results.results {
-    println!("Page {} of {}", page.page_number, page.path);
+    println!("Page {} of {}", page.page_index, page.path);
 }
 ```
 
@@ -260,7 +262,7 @@ let results = client.queries().top_snippets(
 Improve search result quality with reranking:
 
 ```rust
-use zeroentropy::RerankDocument;
+use zeroentropy_community::RerankDocument;
 
 let documents = vec![
     RerankDocument {
@@ -290,7 +292,7 @@ for result in results.results {
 The SDK provides specific error types for different failure scenarios:
 
 ```rust
-use zeroentropy::Error;
+use zeroentropy_community::Error;
 
 match client.collections().add("my_collection").await {
     Ok(_) => println!("Success!"),
@@ -356,7 +358,7 @@ This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENS
 
 - **Documentation**: [docs.zeroentropy.dev](https://docs.zeroentropy.dev)
 - **Email**: founders@zeroentropy.dev
-- **Issues**: [GitHub Issues](https://github.com/zeroentropy-ai/zeroentropy-rust/issues)
+- **Issues**: [GitHub Issues](https://github.com/davidatoms/zeroentropy-rust/issues)
 
 ## Related Projects
 
