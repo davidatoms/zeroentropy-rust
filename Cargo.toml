@@ -23,3 +23,24 @@ tokio-test = "0.4"
 dotenv = "0.15"
 csv = "1.3"
 chrono = "0.4"
+clap = { version = "4.5", features = ["derive"] }
+
+[[example]]
+name = "search_gpt2_dataset"
+path = "examples/search_gpt2_dataset.rs"
+
+[[example]]
+name = "emergence_tester"
+path = "examples/emergence_tester.rs"
+
+[[example]]
+name = "phoneme_to_word_bci"
+path = "examples/phoneme_to_word_bci.rs"
+
+[[example]]
+name = "phoneme_to_word_advanced"
+path = "examples/phoneme_to_word_advanced.rs"
+
+[[example]]
+name = "phoneme_to_word_full_dataset"
+path = "examples/phoneme_to_word_full_dataset.rs"

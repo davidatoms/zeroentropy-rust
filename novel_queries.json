@@ -1,0 +1,102 @@
+[
+  {
+    "text": "How is photosynthesis like a stock market?",
+    "category": "cross_domain_analogy",
+    "description": "Biology ↔ Finance"
+  },
+  {
+    "text": "What do neural networks and ant colonies have in common?",
+    "category": "cross_domain_analogy",
+    "description": "AI ↔ Biology"
+  },
+  {
+    "text": "How is quantum superposition like jazz improvisation?",
+    "category": "cross_domain_analogy",
+    "description": "Physics ↔ Music"
+  },
+  {
+    "text": "What connects protein folding to origami design?",
+    "category": "cross_domain_analogy",
+    "description": "Biochemistry ↔ Art"
+  },
+  {
+    "text": "How does evolution resemble machine learning?",
+    "category": "cross_domain_analogy",
+    "description": "Biology ↔ AI"
+  },
+  {
+    "text": "What similarities exist between city traffic and blood circulation?",
+    "category": "cross_domain_analogy",
+    "description": "Urban planning ↔ Physiology"
+  },
+  {
+    "text": "How is encryption like a medieval fortress?",
+    "category": "cross_domain_analogy",
+    "description": "Cybersecurity ↔ History"
+  },
+  {
+    "text": "What connects blockchain to medieval ledgers?",
+    "category": "cross_domain_analogy",
+    "description": "Crypto ↔ History"
+  },
+  {
+    "text": "How does DNA replication resemble 3D printing?",
+    "category": "cross_domain_analogy",
+    "description": "Biology ↔ Manufacturing"
+  },
+  {
+    "text": "What parallels exist between immune systems and cybersecurity?",
+    "category": "cross_domain_analogy",
+    "description": "Biology ↔ Computer Science"
+  },
+  {
+    "text": "What if the internet was invented in 1950?",
+    "category": "counterfactual",
+    "description": "Alternative technology timeline"
+  },
+  {
+    "text": "How would physics change if light speed was slower?",
+    "category": "counterfactual",
+    "description": "Alternative physical laws"
+  },
+  {
+    "text": "What if humans had evolved with echolocation?",
+    "category": "counterfactual",
+    "description": "Alternative biology"
+  },
+  {
+    "text": "How would society differ if sleep was unnecessary?",
+    "category": "counterfactual",
+    "description": "Alternative human needs"
+  },
+  {
+    "text": "What if electricity was never discovered?",
+    "category": "counterfactual",
+    "description": "Alternative technology path"
+  },
+  {
+    "text": "Describe quantum jazz music theory",
+    "category": "concept_blend",
+    "description": "Physics + Music"
+  },
+  {
+    "text": "What is recursive cooking technique?",
+    "category": "concept_blend",
+    "description": "Programming + Culinary"
+  },
+  {
+    "text": "Explain fractal architecture design principles",
+    "category": "concept_blend",
+    "description": "Mathematics + Architecture"
+  },
+  {
+    "text": "How does algorithmic poetry composition work?",
+    "category": "concept_blend",
+    "description": "Programming + Literature"
+  },
+  {
+    "text": "What is quantum diplomacy strategy?",
+    "category": "concept_blend",
+    "description": "Physics + Politics"
+  }
+]
