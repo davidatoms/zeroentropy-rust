@@ -306,10 +306,19 @@ match client.collections().add("my_collection").await {
 
 ## Examples
 
-Check out the [examples](examples/) directory for more complete examples:
+Check out the [examples](examples/) directory for complete examples:
 
+### Basic Examples
 - [basic.rs](examples/basic.rs) - Complete workflow from collection creation to search
 - [arxiv_search.rs](examples/arxiv_search.rs) - Download and search arXiv papers with PDF support
+- [ehr_search.rs](examples/ehr_search.rs) - Electronic health record search example
+
+### Advanced Examples
+- [search_gpt2_dataset.rs](examples/search_gpt2_dataset.rs) - Search through GPT-2 dataset
+- [emergence_tester.rs](examples/emergence_tester.rs) - Test emergence patterns in semantic search
+- [phoneme_to_word_bci.rs](examples/phoneme_to_word_bci.rs) - Brain-computer interface phoneme matching
+- [phoneme_to_word_advanced.rs](examples/phoneme_to_word_advanced.rs) - Advanced phoneme matching
+- [phoneme_to_word_full_dataset.rs](examples/phoneme_to_word_full_dataset.rs) - Full dataset phoneme analysis
 
 Run an example:
 

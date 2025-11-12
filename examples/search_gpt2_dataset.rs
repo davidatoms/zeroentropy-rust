@@ -22,8 +22,8 @@ struct Cli {
 enum Commands {
     /// Index dataset into ZeroEntropy collections
     Index {
-        /// Number of documents to index per collection
-        #[arg(short, long, default_value = "100")]
+        /// Number of documents to index per collection (0 = all documents)
+        #[arg(short, long, default_value = "0")]
         limit: usize,
 
         /// Collections to index (comma-separated: webtext,gpt2_small,gpt2_medium,gpt2_large,gpt2_xl)
@@ -53,6 +53,17 @@ enum Commands {
     Interactive,
 }
 
+fn expand_tilde(path: &Path) -> PathBuf {
+    if let Some(path_str) = path.to_str() {
+        if path_str.starts_with("~") {
+            if let Some(home) = std::env::var("USERPROFILE").ok().or_else(|| std::env::var("HOME").ok()) {
+                return PathBuf::from(path_str.replacen("~", &home, 1));
+            }
+        }
+    }
+    path.to_path_buf()
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Load .env file if it exists
@@ -63,18 +74,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Create client from ZEROENTROPY_API_KEY environment variable
     let client = Client::from_env()?;
 
-    // Dataset path
-    let dataset_path = &cli.dataset;
+    // Dataset path - expand tilde if present
+    let dataset_path = expand_tilde(&cli.dataset);
     
-    // Collections to search
-    let collections = vec![
-        ("webtext", "webtext.valid.jsonl"),
-        ("gpt2_small", "small-117M.valid.jsonl"),
-        ("gpt2_medium", "medium-345M.valid.jsonl"),
-        ("gpt2_large", "large-762M.valid.jsonl"),
-        ("gpt2_xl", "xl-1542M.valid.jsonl"),
-    ];
-
     // Available collections
     let all_collections = vec![
         ("webtext", "webtext.valid.jsonl"),
@@ -87,7 +89,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     match cli.command {
         Commands::Index { limit, collections: selected } => {
             let collections_to_index = filter_collections(&all_collections, selected);
-            index_collections(&client, dataset_path, &collections_to_index, limit).await?;
+            index_collections(&client, &dataset_path, &collections_to_index, limit).await?;
         }
         Commands::Search { query, limit, collections: selected } => {
             let collections_to_search = filter_collections(&all_collections, selected);
@@ -128,16 +130,20 @@ async fn index_collections(
     println!("{}", "=".repeat(60));
     println!("Indexing GPT-2 Dataset");
     println!("{}", "=".repeat(60));
-    println!("Limit: {} documents per collection", limit);
+    if limit == 0 {
+        println!("Indexing all documents");
+    } else {
+        println!("Limit: {} documents per collection", limit);
+    }
     println!();
     for (collection_name, filename) in collections {
-            println!("\n📂 Processing {}...", collection_name);
+            println!("\nProcessing {}...", collection_name);
             
             // Create collection
             match client.collections().add(*collection_name).await {
-                Ok(response) => println!("  ✓ {}", response.message),
+                Ok(response) => println!("  {}", response.message),
                 Err(zeroentropy_community::Error::Conflict(_)) => {
-                    println!("  ℹ Collection already exists");
+                    println!("  Collection already exists");
                 }
                 Err(e) => return Err(e.into()),
             }
@@ -145,18 +151,22 @@ async fn index_collections(
             // Load and index samples
             let file_path = dataset_path.join(filename);
             if !file_path.exists() {
-                println!("  ⚠️  File not found: {}", file_path.display());
+                println!("  File not found: {}", file_path.display());
                 continue;
             }
 
             let file = File::open(&file_path)?;
             let reader = BufReader::new(file);
             
-            println!("  📊 Indexing up to {} samples...", limit);
+            if limit == 0 {
+                println!("  Indexing all samples...");
+            } else {
+                println!("  Indexing up to {} samples...", limit);
+            }
             let mut count = 0;
             
             for (idx, line) in reader.lines().enumerate() {
-                if idx >= limit {
+                if limit > 0 && idx >= limit {
                     break;
                 }
                 
@@ -183,7 +193,11 @@ async fn index_collections(
                             Some(metadata),
                         ).await {
                             Ok(_) => count += 1,
-                            Err(e) => eprintln!("  ⚠️  Error adding document {}: {}", idx, e),
+                            Err(zeroentropy_community::Error::Conflict(_)) => {
+                                // Document already exists, skip silently
+                                continue;
+                            }
+                            Err(e) => eprintln!("  Error adding document {}: {}", idx, e),
                         }
                         
                         if count % 10 == 0 {
@@ -194,7 +208,7 @@ async fn index_collections(
                 }
             }
             
-            println!("\n  ✓ Indexed {} documents from {}", count, collection_name);
+            println!("\n  Indexed {} documents from {}", count, collection_name);
     }
     
     Ok(())
@@ -222,7 +236,7 @@ async fn code_search(
         ];
 
         for query in code_queries {
-            println!("\n🔍 Searching for: \"{}\"", query);
+            println!("\nSearching for: \"{}\"", query);
             println!("{}", "-".repeat(60));
             
             // Search each collection
@@ -238,13 +252,13 @@ async fn code_search(
                 ).await {
                     Ok(r) => r,
                     Err(e) => {
-                        println!("  ⚠️  Error searching {}: {}", collection_name, e);
+                        println!("  Error searching {}: {}", collection_name, e);
                         continue;
                     }
                 };
 
                 if !results.results.is_empty() {
-                    println!("\n  📊 {} ({} results):", collection_name, results.results.len());
+                    println!("\n  {} ({} results):", collection_name, results.results.len());
                     
                     for (i, result) in results.results.iter().take(2).enumerate() {
                         println!("\n    {}. {} (score: {:.4})", i + 1, result.path, result.score);
@@ -289,13 +303,13 @@ async fn search_collections(
         ).await {
             Ok(r) => r,
             Err(e) => {
-                println!("⚠️  Error searching {}: {}", collection_name, e);
+                println!("Error searching {}: {}", collection_name, e);
                 continue;
             }
         };
 
         if !results.results.is_empty() {
-            println!("📊 {} - Found {} matches:", collection_name, results.results.len());
+            println!("{} - Found {} matches:", collection_name, results.results.len());
             
             for (i, result) in results.results.iter().enumerate() {
                 println!("\n  {}. {} (score: {:.4})", i + 1, result.path, result.score);
@@ -336,7 +350,7 @@ async fn interactive_search(
             break;
         }
         
-        println!("\n🔍 Searching all collections for: \"{}\"", query);
+        println!("\nSearching all collections for: \"{}\"", query);
         println!("{}", "-".repeat(60));
         
         // Search all collections
@@ -352,13 +366,13 @@ async fn interactive_search(
             ).await {
                 Ok(r) => r,
                 Err(e) => {
-                    println!("  ⚠️  Error: {}", e);
+                    println!("  Error: {}", e);
                     continue;
                 }
             };
 
             if !results.results.is_empty() {
-                println!("\n  📊 {} - Found {} matches:", collection_name, results.results.len());
+                println!("\n  {} - Found {} matches:", collection_name, results.results.len());
                 
                 for (i, result) in results.results.iter().take(3).enumerate() {
                     println!("\n    {}. {} (score: {:.4})", i + 1, result.path, result.score);

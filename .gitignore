@@ -33,3 +33,6 @@ docs/
 
 # Future integration notes (internal planning)
 future-integrations/
+.claude
+.github
+.env
